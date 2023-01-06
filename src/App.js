@@ -49,7 +49,9 @@ function App() {
         resetTurn();
       } else {
         console.log("No Match");
-        resetTurn();
+        setTimeout(() => {
+          resetTurn();
+        }, 1000);
       }
     }
   }, [choiceTwo]);
