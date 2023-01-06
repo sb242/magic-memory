@@ -24,6 +24,8 @@ function App() {
       .sort(() => Math.random() - 0.5)
       .map((card) => ({ ...card, id: Math.random() }));
 
+    setChoiceOne(null);
+    setChoiceTwo(null);
     setCards(shuffledCards);
     setTurns(0);
   };
@@ -34,8 +36,9 @@ function App() {
     choiceOne ? setChoiceTwo(card) : setChoiceOne(card);
   };
 
+  //compare two selected cards
   useEffect(() => {
-    if (choiceTwo) {
+    if (choiceTwo && choiceOne) {
       setDisabled(true);
       if (choiceOne.src === choiceTwo.src) {
         console.log("Match");
@@ -56,7 +59,7 @@ function App() {
         }, 1000);
       }
     }
-  }, [choiceTwo]);
+  }, [choiceTwo, choiceOne]);
 
   console.log(cards);
 
@@ -66,6 +69,11 @@ function App() {
     setTurns((prevTurns) => prevTurns + 1);
     setDisabled(false);
   };
+
+  //start game automatically
+  useEffect(() => {
+    shuffleCards();
+  }, []);
 
   return (
     <div className="App">
@@ -83,6 +91,7 @@ function App() {
           />
         ))}
       </div>
+      <p>Turns: {turns}</p>
     </div>
   );
 }
